@@ -30,7 +30,7 @@ func decrypt(text string, shift int) string {
 	}
 	return result
 }
-func main() {
+func ceaser() {
 	var option int
 	fmt.Println("1. Encrypt")
 	fmt.Println("2. Decrypt")
