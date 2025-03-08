@@ -9,7 +9,13 @@ func task2() {
 	var ct string
 	fmt.Println("Enter Cipher Text Encrypted with Monoalphabetic cipher")
 	fmt.Scanln(&ct)
-	englishFreq := "etaoinshrdlcumwfgypbvkjxqz"
+	englishFreq := []string{
+		"etaoinshrdlcumwfgypbvkjxqz",
+		"taeoinshrdlcumwfgypbvkjxqz",
+		"oetaoinshrdlcumwfgypbvkjxqz",
+		"ineotasrdlcumwfgypbvkjxqz",
+		"soetainhrdlcumwfgypbvkjxqz",
+	}
 	ctFreq := make(map[rune]int)
 	for _, letter := range ct {
 		ctFreq[letter]++
@@ -24,23 +30,23 @@ func task2() {
 		return ctFreq[ctLetters[i]] > ctFreq[ctLetters[j]] // Sort by frequency descending
 	})
 
-	mapping := make(map[rune]rune)
-	for i, letter := range ctLetters {
-		if i < len(englishFreq) {
-			mapping[letter] = rune(englishFreq[i])
+	for i, englishFreq := range englishFreq {
+		mapping := make(map[rune]rune)
+		for j, letter := range ctLetters {
+			if j < len(englishFreq) {
+				mapping[letter] = rune(englishFreq[j])
+			}
 		}
-	}
 
-	decrypted := ""
-	for _, letter := range ct {
-		if mapped, exists := mapping[letter]; exists {
-			decrypted += string(mapped)
-		} else {
-			decrypted += string(letter) // Keep original if not found
+		decrypted := ""
+		for _, letter := range ct {
+			if mapped, exists := mapping[letter]; exists {
+				decrypted += string(mapped)
+			} else {
+				decrypted += string(letter) // Keep original if not found
+			}
 		}
+
+		fmt.Printf("Probable Decryption %d: %s\n", i+1, decrypted)
 	}
-
-	fmt.Println("Mapping: ", mapping)
-	fmt.Println("Decrypted Text: ", decrypted)
-
 }
